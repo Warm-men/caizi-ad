@@ -1,0 +1,71 @@
+:global {
+  #qrodeEdit {
+    .title {
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    .info {
+      padding: 10px 0;
+    }
+    .qrodeEdit-content {
+      display: flex;
+      margin-top: 20px;
+      align-items: center;
+    }
+    .qrCode {
+      margin-left: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      img {
+        width: 186px;
+      }
+
+      a {
+        padding: 10px;
+        display: block;
+      }
+    }
+    .form-items {
+      .item {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+
+        .label {
+          position: relative;
+          width: 130px;
+
+          .required {
+            color: red;
+            margin-right: 5px;
+          }
+        }
+        .value {
+          flex: 1;
+          max-width: 450px;
+          display: flex;
+          align-items: center;
+
+          .blue {
+            color: #1890ff;
+          }
+
+          .ant-switch {
+            margin-right: 10px;
+          }
+
+          .selected-items {
+            margin-right: 10px;
+
+            .ant-tag {
+              display: inline-block;
+              margin: 5px 5px 5px 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

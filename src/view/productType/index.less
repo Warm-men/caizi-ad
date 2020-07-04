@@ -1,0 +1,65 @@
+:global {
+  .productType {
+    .title {
+      padding: 0 0 20px 0;
+      font-size: 16px;
+      border-bottom: 1px solid #eee;
+    }
+    .top {
+      display: flex;
+      margin: 30px 0;
+    }
+    .bottom {
+      display: flex
+    }
+    .label {
+      width: 90px;
+      line-height: 20px;
+    }
+    .content {
+      width: 1000px;
+    }
+    .upWrap {
+      display: inline-block;
+      margin-right: 10px;
+    }
+    .actionUpIcon {
+      cursor: pointer;
+      font-size: 18px;
+    }
+    .actionDragIcon {
+      cursor: move;
+      font-size: 18px;
+    }
+    td {
+      vertical-align: middle
+    }
+    // 拖拽线
+    .drop-over-downward td {
+      border-bottom: 1px dashed #1890ff;
+    }
+    
+    .drop-over-upward td {
+      border-top: 1px dashed #1890ff;
+    }
+  }
+}
+.selectedTag {
+  width: 70px;
+  height: 70px;
+  padding: 10px;
+  margin-right: 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  margin-bottom: 30px;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid #eee;
+}
+.iconSpan {
+  display: inline-flex;
+  width: 100px;
+  padding-right: 40px;
+  justify-content: flex-end;
+}

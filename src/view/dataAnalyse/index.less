@@ -1,0 +1,67 @@
+:global {
+  .dataAnalyse {
+    .header {
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .left {
+      float: left;
+    }
+
+    .leftItem {
+      margin-right: 20px !important;
+      margin-top: 10px !important;
+      display: inline-block;
+    }
+
+    .sub-text {
+      color: rgba(171,171,171,1);
+    }
+
+    .content {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 16px;
+
+      .tips {
+        margin: 160px auto;
+      }
+    }
+    .sub-tips{
+        color: rgba(171,171,171,1);
+        margin: 12px 0;
+    }
+    /* 滚动条定制 */
+    ::-webkit-scrollbar {
+      width: auto;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: rgb(241, 241, 241);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: rgb(193, 193, 193);
+      border-radius: auto;
+    }
+
+    ::-webkit-scrollbar:horizontal {
+      height: 14px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #aaa;
+      border-radius: auto;
+    }
+
+    ::-webkit-scrollbar-thumb:active {
+      background-color: rgb(193, 193, 193);
+      border-radius: auto;
+    }
+
+    .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+        word-break: break-all;
+    }
+  }
+}

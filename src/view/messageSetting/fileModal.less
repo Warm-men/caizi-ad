@@ -1,0 +1,95 @@
+:global {
+  .file-modal {
+    .form {
+      display: flex;
+      margin-bottom: 20px;
+
+      .label {
+        width: 120px;
+        position: relative;
+        line-height: 32px;
+        height: 32px;
+        span {
+          display: block;
+          position: absolute;
+          line-height: 1;
+          left: -10px;
+          top: 50%;
+          transform: translateY(-30%);
+          color: red;
+        }
+      }
+      .value {
+        flex: 1;
+        overflow: hidden;
+        position: relative;
+
+        .ant-upload,
+        .ant-upload-list {
+          display: block;
+        }
+
+        .ant-select {
+          width: 100% !important;
+          display: block;
+        }
+
+        .tips {
+          font-size: 12px;
+          color: #999;
+        }
+
+        .file-info {
+          line-height: 32px;
+          display: flex;
+          align-items: center;
+
+          &.relative {
+            position: relative;
+            z-index: 2;
+          }
+
+          .file-icon {
+            width: 16px;
+            height: auto;
+          }
+
+          .file-name {
+            color: #1890ff;
+            max-width: 70%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            cursor: pointer;
+            padding: 0 10px;
+          }
+
+          .file-size {
+            color: #666;
+            font-size: 12px;
+          }
+
+          .file-del {
+            width: 32px;
+            height: auto;
+            padding: 10px;
+            cursor: pointer;
+          }
+        }
+
+        .file-input {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 32px;
+          opacity: 0;
+          cursor: pointer;
+        }
+      }
+      .ant-upload {
+        cursor: pointer;
+      }
+    }
+  }
+}

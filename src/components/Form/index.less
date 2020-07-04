@@ -1,0 +1,84 @@
+:global {
+  #filter {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+    padding: 10px 0;
+
+    &.modalFilter {
+      margin: 0;
+      padding: 0;
+      display: block;
+
+      .filter-form {
+        margin: 10px 0;
+
+        &:first-child {
+          margin-top: 0;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .filter-label {
+          width: 130px;
+        }
+
+        .filter-value {
+          flex: 1;
+          max-width: 400px;
+
+          &.linkage-select {
+            max-width: 190px;
+            margin-right: 20px;
+            flex: auto;
+
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
+      }
+    }
+
+    .filter-form {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px 10px;
+
+      .filter-label {
+        min-width: 88px;
+        position: relative;
+      }
+
+      .required {
+        color: red;
+        margin-right: 5px;
+      }
+
+      .filter-value {
+        width: 220px;
+
+        &.linkage-select {
+          width: 110px;
+        }
+      }
+    }
+
+    .btns {
+      margin-left: 10px;
+
+      .ant-btn {
+        margin-right: 10px;
+      }
+    }
+
+    .ant-upload-list-item-thumbnail {
+      display: flex;
+      align-items: center;
+    }
+  }
+}

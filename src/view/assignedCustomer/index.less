@@ -1,0 +1,47 @@
+.wrap {
+  overflow: hidden;
+}
+.left {
+  width: 280px;
+  float: left;
+  margin-right: 20px;
+  height: 645px;
+  border: 1px solid #eee;
+  box-shadow: 0 3px 4px rgba(0,21,41,0.08);
+  overflow: auto;
+}
+.right {
+  width: calc(~'100% - 300px');
+  float: left;
+}
+.rightHeader {
+  margin-bottom: 20px;
+  text-align: right;
+}
+.treeWrap {
+  padding: 10px;
+}
+.allManage {
+  text-indent: 10px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+.noneInfo {
+  color: #aaa;
+  margin-top: 50px;
+  text-align: center;
+  i {
+    color: #1890ff;
+  }
+}
+:global {
+  // .assignedTree {
+  //   // 树根节点不出现可点击样式
+  //   .ant-tree > li >.ant-tree-node-content-wrapper {
+  //     cursor: initial !important;
+  //   }
+  //   .ant-tree > li > .ant-tree-node-content-wrapper:hover {
+  //     background-color: #fff;
+  //   }
+  // }
+}

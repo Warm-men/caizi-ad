@@ -1,0 +1,87 @@
+.wrap {
+  overflow: hidden;
+}
+.left {
+  float: left;
+  width: 280px;
+  margin-right: 20px;
+}
+.leftTop {
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.leftBottom {
+  height: 645px;
+  border: 1px solid #eee;
+  overflow: auto;
+}
+.right {
+  float: right;
+  width: calc(~'100% - 300px');
+}
+.rightTop {
+  overflow: hidden;
+  margin-bottom: 20px;
+  min-height: 32px;
+}
+.treeWrap {
+  padding: 10px;
+  position: relative;
+  .addIcon {
+    cursor: pointer;
+    padding: 5px;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    font-size: 16px;
+  }
+}
+.tableActionLeftItem {
+  float: left;
+  margin-right: 20px !important;
+}
+.tableActionRightItem {
+  float: right;
+  margin-left: 20px !important;
+}
+.questionInfo {
+  margin: 0 0 0 15px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+:global {
+  .staffListDeptTree {
+    // 修改被点击的树节点样式 树节点被hover显示下拉删除修改部门
+    .ant-tree-node-content-wrapper  {
+      width: calc(100% - 24px);
+      .ant-tree-title {
+        display: inline-block;
+        width: 100%;
+        position: relative;
+        .treeItemTitle {
+          display: inline-block;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          max-width: calc(100% - 24px);
+        }
+        .treeItemDropdown {
+          position: absolute;
+          top: 0px;
+          right: 0px;
+          display: none;
+        }
+      }
+      .ant-tree-title:hover {
+        .treeItemDropdown {
+          display: block;
+        }
+      }
+    }
+  }
+  // table禁用行灰色
+  .staffListRowDisabled {
+    color: #ccc;
+  }
+}

@@ -1,0 +1,210 @@
+.header {
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.main_title {
+  font-size: 20px;
+  font-size: 550;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+.headerLeft {
+  float: left;
+}
+.content {
+  overflow: hidden;
+  border: 1px solid #eee;
+}
+.left {
+  width: 220px;
+  float: left;
+  height: 645px;
+  border-right: 1px solid #eee;
+}
+.right {
+  width: calc(~'100% - 220px');
+  float: left;
+}
+.title {
+  background: rgb(250, 250, 250);
+  padding: 20px;
+  font-weight: bold;
+}
+.menuWrap {
+  height: 590px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.roleList {
+  border: none !important;
+}
+.roleItem {
+  font-size: 14px;
+}
+:global {
+  .role-detail {
+    .ant-form-item-label {
+      text-align: left;
+    }
+  }
+}
+.addIcon {
+  cursor: pointer;
+  color: #1890ff;
+  font-size: 18px;
+}
+.roleMemberList {
+  span {
+    margin: 10px 10px 0 0;
+  }
+}
+.memberModalBody {
+  overflow: hidden;
+}
+.memberLeft {
+  float: left;
+  width: 400px;
+}
+.memberRight {
+  float: right;
+  width: 230px;
+}
+.memberTitle {
+  font-weight: bold;
+}
+.memberTitle {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.memberTreeArea {
+  border: 1px solid #eee;
+  height: 500px;
+  overflow: auto;
+}
+.selectMemberArea {
+  border: 1px solid #eee;
+  height: 500px;
+  overflow: auto;
+}
+.selectMemberItem {
+  width: 100%;
+  position: relative;
+  padding: 5px 10px;
+  &:hover {
+    background: rgb(230, 247, 255);
+    .noSelectIcon {
+      display: block;
+    }
+  }
+}
+.noSelectIcon {
+  display: none;
+  position: absolute;
+  right: 10px;
+  top: 7px;
+  cursor: pointer;
+  color: #1890ff;
+  font-size: 16px;
+}
+.treeTableHeaderWrapper {
+  border-left: 1px solid #eee;
+  width: 802px;
+  .treeTableHeader {
+    overflow: hidden;
+    li {
+      font-weight: bold;
+      background: rgb(250, 250, 250);
+    }
+  }
+}
+.treeTable {
+  border-left: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  width: 802px;
+  overflow: hidden;
+  .treeTableHeader {
+    overflow: hidden;
+    li {
+      font-weight: bold;
+      background: rgb(250, 250, 250);
+    }
+  }
+}
+.treeUl {
+  overflow: hidden;
+}
+.treeSpan {
+  float: left;
+  width: 150px;
+  border: 1px solid #eee;
+  text-align: center;
+  border-left: none;
+  border-bottom: none;
+}
+.treeSpanOperation {
+  float: left;
+  width: 100px;
+  border: 1px solid #eee;
+  text-align: center;
+  border-left: none;
+  border-bottom: none;
+}
+.treeSpanRight {
+  float: left;
+  width: 400px;
+  border: 1px solid #eee;
+  padding: 0 0px 0 20px;
+  border-left: none;
+  border-bottom: none;
+}
+.selectWrap {
+  margin: 10px;
+}
+.treeWrap {
+  border: 1px solid #eee;
+  margin: 10px;
+  height: 435px;
+  overflow: auto;
+}
+
+.content_view_wrapper {
+  display: flex;
+  min-height: 60vh;
+  .left_view {
+    width: 220px;
+    min-width: 220px;
+    border-right: 1px solid #eee;
+    padding-right: 20px;
+    padding-top: 20px;
+    .scrollViewWrapper {
+      height: calc(100% - 80px);
+      max-height: 80vh;
+      overflow-y: scroll;
+      margin-top: 10px;
+    }
+  }
+  .right_view {
+    flex: 1;
+    padding-left: 30px;
+    .right_view_title {
+      font-size: 20px;
+      font-weight: 500;
+      margin: 20px 0 20px 0;
+    }
+  }
+}
+
+.roleMember {
+  width: 100%;
+  .memberListSearchView {
+    display: flex;
+    height: 40px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    .right_view_btn {
+      margin-right: 10px;
+    }
+  }
+}

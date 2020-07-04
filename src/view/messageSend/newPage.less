@@ -1,0 +1,286 @@
+:global {
+  #NewPage {
+    .title {
+      padding: 0 0 20px;
+      font-size: 16px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .sub-title {
+      font-size: 14px;
+      color: rgb(134,134,134);
+      padding: 10px 0 40px;
+    }
+
+    .tabs {
+      margin-bottom: 20px;
+
+      .ant-btn {
+        width: 120px;
+        margin-right: 10px;
+      }
+    }
+
+    // 图文
+    .image-text-box {
+      min-height: 600px;
+      display: flex;
+      word-break: break-word;
+      // 实时展示样式
+      .left {
+        flex: 0;
+        width: 400px;
+        min-width: 400px;
+        max-width: 400px;
+        padding-left: 22px;
+
+        .pointer {
+          &:hover {
+            border-color: #40a9ff !important;
+          }
+        }
+
+        // .pointer0 {
+        //   &:hover {
+        //     .btn-box0 {
+        //       opacity: 1 !important;
+        //     }
+        //   }
+        // }
+
+        .pointer1 {
+          &:hover {
+            .btn-box1 {
+              opacity: 1 !important;
+            }
+          }
+        }
+
+        .pointer2 {
+          &:hover {
+            .btn-box2 {
+              opacity: 1 !important;
+            }
+          }
+        }
+
+        .pointer3 {
+          &:hover {
+            .btn-box3 {
+              opacity: 1 !important;
+            }
+          }
+        }
+
+        .btn-box {
+          flex: 0;
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          height: 30px;
+          line-height: 30px;
+          display: flex;
+          transition: all 0.5s;
+          opacity: 0;
+          text-align: center;
+
+          .edit-btn-box {
+            flex: 1;
+            background-color: rgba(24, 144, 255, .7);
+            color: white;
+            transition: all 0.3s;
+            cursor: pointer;
+
+            &:hover {
+              background-color: rgba(24, 144, 255, 1);
+            }
+          }
+
+          .del-btn-box {
+            flex: 1;
+            background-color: rgba(255, 77, 79, .7);
+            color: white;
+            transition: all 0.3s;
+            cursor: pointer;
+
+            &:hover {
+              background-color: rgba(255, 77, 79, 1);
+            }
+          }
+        }
+
+        .left-box {
+          width: 358px;
+
+          .big-title-box {
+            border: 1px solid #d9d9d9;
+            position: relative;
+            width: 100%;
+
+            .big-image {
+              width: 100% !important;
+              height: 152px !important;
+              background-color: #999;
+              position: relative;
+
+              &::after{
+                content: ' ';
+                position: absolute;
+                display: flex;
+                width: 100%;
+                height: 100%;
+                align-items: center;
+                justify-content: center;
+                font-size: 30px;
+                background-color: #f4f4f4;
+              }
+            }
+
+            .big-title {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              line-height: 18px;
+              padding: 10px;
+              width: 100%;
+              background-color: rgba(0, 0, 0, .3);
+              color: white;
+
+              p {
+                font-size: 16px;
+                font-weight: bold;
+                line-height: 18px;
+              }
+
+              .big-sub-title {
+                font-weight: 400;
+                font-size: 14px;
+              }
+            }
+          }
+
+          .sub-title-box {
+            border: 1px solid #d9d9d9;
+            position: relative;
+            width: 100%;
+            height: 70px;
+
+            .white-bg {
+              display: flex;
+              align-items: center;
+              background-color: white;
+              padding: 0 10px;
+              width: 100%;
+              height: 100%;
+            }
+
+            .sub-title-content {
+              flex: 1;
+            }
+
+            .small-image {
+              width: 50px;
+              height: 50px !important;
+              display: flex;
+              margin-left: 10px;
+              background-color: #999;
+              position: relative;
+
+              &:after {
+                content: ' ';
+                position: absolute;
+                display: flex;
+                width: 100%;
+                height: 100%;
+                align-items: center;
+                justify-content: center;
+                background-color: #f4f4f4;
+              }
+            }
+          }
+
+          .active-box {
+            overflow: hidden;
+            border: 2px solid rgba(126,198,252);
+            border-radius: 4px;
+            box-sizing: border-box;
+            // animation: move 1s infinite linear;
+          }
+          // 添加按钮
+          .add-btn-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.5s;
+            border: 1px solid #d9d9d9;
+            border-top: none;
+
+            .add-plus {
+              transition: all 0.5s;
+              font-size: 22px;
+              padding: 10px 0;
+            }
+
+            &:hover {
+              border-color: #40a9ff;
+              background-color: #40a9ff;
+
+              .add-plus {
+                color: white;
+                font-weight: bold;
+              }
+            }
+          }
+        }
+      }
+
+      .right {
+        flex: 1;
+        border: 1px solid #d9d9d9;
+        padding: 20px;
+
+        .tips {
+          line-height: 22px;
+          color: #999;
+        }
+      }
+
+      .btn-box {
+        flex: 0;
+      }
+    }
+    // 纯文字
+    .words-box {
+      span {
+        float: right;
+        color: #666;
+        margin-top: 10px;
+      }
+
+      .error {
+        color: red;
+      }
+    }
+    // 保存按钮
+    .btn-box {
+      margin-top: 10px;
+
+      .ant-btn {
+        margin-right: 20px;
+      }
+
+      .ant-form-item-children {
+        display: flex;
+        align-items: center;
+        .label{
+          width: 80px;
+          min-width: 80px;
+        }
+        .ant-select {
+          flex: 1;
+        }
+      }
+    }
+  }
+}
