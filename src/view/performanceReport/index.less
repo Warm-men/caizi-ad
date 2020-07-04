@@ -1,0 +1,44 @@
+:global {
+  #performanceReport {
+    .ant-table-thead > tr > th {
+      text-align: center;
+    }
+    .title {
+      font-size: 16px;
+      padding: 0 0 20px 0;
+      line-height: 32px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .tips {
+      text-align: right;
+      padding-bottom: 10px;
+    }
+
+    .filter {
+      display: flex;
+      align-items: center;
+
+      .item {
+        margin: 10px 20px;
+        display: flex;
+        height: 64px;
+        align-items: center;
+      }
+
+      .value {
+        width: 220px;
+      }
+
+      .btns {
+        margin: 10px 20px;
+        .ant-btn {
+          margin-right: 10px;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}

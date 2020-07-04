@@ -1,0 +1,91 @@
+:global {
+  .staffs-modal {
+    .ant-modal-body {
+      padding-bottom: 0;
+    }
+    .ant-spin-container {
+      height: 70vh;
+      overflow: hidden;
+      position: relative;
+      padding: 54px 0;
+      display: flex;
+
+      .titles {
+        display: flex;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+
+        .title {
+          flex: 1;
+          text-align: center;
+          padding-bottom: 10px;
+          font-weight: 600;
+          font-size: 16px;
+        }
+      }
+
+      .footers {
+        display: flex;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+
+        .footer {
+          flex: 1;
+
+          .btn {
+            line-height: 34px;
+            display: inline-block;
+            color: #1890ff;
+            cursor: pointer;
+            padding: 0 10px;
+          }
+        }
+      }
+
+      .selecter {
+        flex: 1;
+        overflow: auto;
+        border-right: 1px solid #efefef;
+        padding: 0 20px;
+        position: relative;
+
+        &:last-child {
+          border: none;
+        }
+
+        .ant-input-search {
+          margin-bottom: 10px;
+        }
+
+        .item {
+          height: 30px;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          padding-left: 10px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          margin-bottom: 6px;
+          justify-content: space-between;
+
+          .anticon-close {
+            padding: 10px;
+          }
+
+          &.selected {
+            background-color: #efefef;
+          }
+
+          &:hover {
+            color: #1890ff;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,85 @@
+.header {
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.rowView {
+  margin: 24px 0;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.leftItem {
+  margin-right: 20px !important;
+}
+.rightItem {
+  margin-left: 20px !important;
+}
+.tableTitle {
+  font-size: 14px;
+  color: #aaa;
+  margin-left: 5px;
+}
+.detailTitle {
+  font-size: 16px;
+  text-align: center;
+}
+.detailCreate {
+  font-size: 14px;
+  color: #999;
+  margin: 10px 0;
+  text-align: center;
+}
+.mustSendBtn {
+  position: relative;
+  top: -50px;
+  margin-right: 20px;
+}
+:global {
+  .newsListSendDetailModal {
+    .ant-modal-title {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 520px;
+      white-space: nowrap;
+    }
+  }
+  .newsListDetailModal {
+    .ant-modal-body {
+      height: calc(100vh - 240px);
+      overflow: auto;
+    }
+    // 文章详情页弹窗样式修改
+    .detailContent {
+      .rich_media_tool {
+        display: none;
+      }
+      img {
+        max-width: 100%;
+      }
+    }
+  }
+  .newsHot {
+    .titleColumn {
+      display: block;
+      width: 380px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      word-break: break-word;
+    }
+  }
+  .newsListTagModal {
+    .line {
+      height: 30px;
+    }
+    .tagArea {
+      min-height: 50px;
+      line-height: 30px;
+      border-bottom: 1px solid #e8e8e8;
+      margin: 0 0 20px 0;
+    }
+  }
+}

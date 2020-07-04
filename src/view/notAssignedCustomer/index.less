@@ -1,0 +1,28 @@
+.header {
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.leftItem {
+  margin-right: 20px !important;
+}
+.rightItem {
+  margin-left: 20px !important;
+}
+// 全局css设置 用普通的className="notAssignedCustomerTable"
+:global {
+  .notAssignedCustomerTable {
+    .ant-table-thead {
+      .ant-table-selection-column {
+        span{
+          display: none
+        }
+      }
+    }  
+  }
+}
