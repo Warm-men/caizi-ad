@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Input, TreeSelect, Spin, Button, Select, Upload, message, Avatar, Radio } from 'antd'
-import { Link } from 'react-router-dom'
+import { Input, TreeSelect, Spin, Button, Form, Upload, message, Avatar, Radio } from 'antd'
+import { withRouter } from 'react-router-dom'
 import axios from '@src/utils/axios'
 import urls from '@src/config'
 import styles from './index.less'
+import PageHeaderHoc from '@src/components/PageHeaderHoc'
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
@@ -13,6 +14,7 @@ const mapStateToProps = (state) => {
 }
 
 @connect(mapStateToProps)
+@withRouter
 class showPosterEdit extends Component {
   constructor (props, context) {
     super(props)
@@ -48,7 +50,7 @@ class showPosterEdit extends Component {
     if (data.type === 'edit') { // 编辑
       let editData = data.data
       this.setState({
-        title: '编辑',
+        title: '编辑海报',
         type: 'edit',
         id: data.data.id,
         inputName: editData.name,
@@ -78,7 +80,7 @@ class showPosterEdit extends Component {
       })
     } else { // 新增
       this.setState({
-        title: '新增',
+        title: '新增海报',
         type: 'add'
       })
     }
@@ -326,81 +328,84 @@ class showPosterEdit extends Component {
   render () {
     const { title, postImg, inputName, orgValue, configOrgTree, type, btnLoading, loadingSpin, posterCustomizedInfo, customInfo,
       moveContainerVisible, moveBoxVisible, customRadioVisible, width, height, x, y, containerHeight } = this.state
+    const itemCol1 = {
+      labelCol: {span: 5},
+      wrapperCol: {span: 18}
+    }
     return (
       <div className={styles.showPosterEditContainer} style={{minWidth: 1012}}>
-        <div>
+        <div style={{width: 600}}>
           <Spin spinning={loadingSpin} tip='图片上传中'>
-            <div className={styles.header}>
-              <p>展业海报/{title}</p>
-            </div>
+            <PageHeaderHoc
+              onBack={this.props.history.goBack}
+              subTitle={title}
+            />
             <div className={styles.posterBtnContainer}>
-              <span><span className={styles.icon}>*</span>海报</span>
-              <Upload
-                action={urls.bannerUpload}
-                onChange={this.handleChangeImg}
-                beforeUpload={this.beforeUploadImg}
-                showUploadList={false}
-              >
-                <Button type="primary" style={{ marginLeft: 44, width: 130 }}>上传</Button>
-              </Upload>
-            </div>
-            <div className={styles.posterImgConter}>
-              <div className={styles.img}>
-                <Avatar shape="square" size={140} src={postImg} />
-              </div>
-              <div className={styles.text}>
-                <p>1.宽度固定为750 高度应该是不小于1100PX</p>
-                <p>2.支持格式JPG，PNG</p>
-              </div>
-            </div>
-            <div className={styles.inputContainer}>
-              <div className={styles.nameContainer}>
-                <span className={styles.nameText}><span className={styles.icon}>*</span>名称</span>
-                <Input value={inputName}
-                  placeholder='请输入名称'
-                  style={{ width: 372, marginLeft: 38 }}
-                  maxLength={10}
-                  onChange={(e) => { this.setState({ inputName: e.target.value }) }} />
-              </div>
-              <div className={styles.orgContainer}>
-                <span className={styles.orgName}><span className={styles.icon}>*</span>机构名称</span>
-                <TreeSelect
-                  style={{ width: 372, marginLeft: 10 }}
-                  value={orgValue}
-                  dropdownStyle={{ overflow: 'auto' }}
-                  placeholder="请选择机构"
-                  treeDefaultExpandedKeys={[configOrgTree[0].id]}
-                  allowClear={false}
-                  dropdownStyle={{ maxHeight: '40vh', overflow: 'auto' }}
-                  multiple={false}
-                  onChange={(value) => { this.setState({ orgValue: value }) }}
-                  treeData={configOrgTree}
-                >
-                </TreeSelect>
-              </div>
-              <div style={{marginTop: 30}}>
-                <span>海报定制信息</span>
-                <span style={{marginLeft: 10}}>
+              <div className={styles.content}>
+                <Form.Item label={<span><span className={'red'}>*</span>海报</span>} {...itemCol1}>
+                  <div style={{marginBottom: 20}}>
+                    <Upload
+                      action={urls.bannerUpload}
+                      onChange={this.handleChangeImg}
+                      beforeUpload={this.beforeUploadImg}
+                      showUploadList={false}
+                    >
+                      <Button type="primary">上传</Button>
+                    </Upload>
+                  </div>
+                  <div className={styles.img}>
+                    <Avatar shape="square" size={140} src={postImg} />
+                  </div>
+                  <div className={styles.text}>
+                    <p>1.宽度固定为750 高度应该是不小于1100PX</p>
+                    <p>2.支持格式JPG，PNG</p>
+                  </div>
+                </Form.Item>
+
+                <Form.Item label={<span><span className={'red'}>*</span>名称</span>} {...itemCol1}>
+                  <Input value={inputName}
+                    placeholder='请输入名称'
+                    style={{ width: 370 }}
+                    maxLength={10}
+                    onChange={(e) => { this.setState({ inputName: e.target.value }) }} />
+                </Form.Item>
+
+                <Form.Item label={<span><span className={'red'}>*</span>机构名称</span>} {...itemCol1}>
+                  <TreeSelect
+                    style={{ width: 350 }}
+                    value={orgValue}
+                    dropdownStyle={{ overflow: 'auto' }}
+                    placeholder="请选择机构"
+                    treeDefaultExpandedKeys={[configOrgTree[0].id]}
+                    allowClear={false}
+                    dropdownStyle={{ maxHeight: '40vh', overflow: 'auto' }}
+                    multiple={false}
+                    onChange={(value) => { this.setState({ orgValue: value }) }}
+                    treeData={configOrgTree}
+                  >
+                  </TreeSelect>
+                </Form.Item>
+
+                <Form.Item label={'海报定制信息'} {...itemCol1}>
                   <Radio.Group value={posterCustomizedInfo} onChange={this.onPosterRadioChange} size="small" buttonStyle="solid">
                     <Radio value="1">员工自定义</Radio>
                     <Radio value="2">管理员自定义</Radio>
                   </Radio.Group>
-                </span>
-              </div>
-              <div style={{marginTop: 30, display: customRadioVisible}}>
-                <span>自定义信息</span>
-                <span style={{marginLeft: 25}}>
+                </Form.Item>
+
+                {customRadioVisible && <Form.Item label={'自定义信息'} {...itemCol1}>
                   <Radio.Group value={customInfo} onChange={this.onCustomRadioChange} size="small" buttonStyle="solid">
                     <Radio value="1">员工二维码（企业微信二维码）</Radio>
                     <Radio value="0">无</Radio>
                   </Radio.Group>
-                </span>
+                </Form.Item>}
+
               </div>
             </div>
-            <div className={styles.bottom}>
-              <Link to={{ pathname: '/posterSetting' }}><Button >返回</Button></Link>
-              <Button style={{ marginLeft: 40 }} loading={btnLoading} type="primary" onClick={(e) => { this.handleSave(e, type) }}>上传</Button>
-            </div>
+            <Form.Item wrapperCol={{offset: 5}}>
+              <Button style={{marginRight: 10}} type="default" onClick={this.props.history.goBack}>取消</Button>
+              <Button loading={btnLoading} type="primary" onClick={(e) => { this.handleSave(e, type) }}>保存</Button>
+            </Form.Item>
           </Spin>
         </div>
         <div id="father" style={{visibility: moveContainerVisible, height: containerHeight, backgroundImage: `url(${postImg})`}} className={styles.dragContainer}>

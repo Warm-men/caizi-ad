@@ -3,7 +3,7 @@ import { PageHeader, Icon } from 'antd'
 
 export default class PageHeaderHoc extends React.PureComponent {
   render () {
-    const { backText, onBack, subTitle } = this.props
+    const { backText, onBack, subTitle, hasGoback = true } = this.props
     return (
       <PageHeader
         {...this.props}
@@ -25,13 +25,15 @@ export default class PageHeaderHoc extends React.PureComponent {
               lineHeight: '32px'
             }}
           >
-            <span onClick={onBack}>
-              <Icon
-                type="left"
-                style={{color: '#3078DB'}}
-              />
-              {backText || '返回'}
-            </span>
+            {hasGoback
+              ? <span onClick={onBack}>
+                <Icon
+                  type="left"
+                  style={{color: '#3078DB'}}
+                />
+                {backText || '返回'}
+              </span>
+              : null }
             <span style={{color: '#000', fontWeight: '550', marginLeft: 10}}>{subTitle}</span>
           </span>}
       >

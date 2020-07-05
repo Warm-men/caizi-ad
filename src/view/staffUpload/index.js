@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styles from './index.less'
-import { Switch, Icon, message, Form, Popover, Button } from 'antd'
+import { Switch, Icon, message, Form, Tooltip, Button } from 'antd'
 import axios from '@src/utils/axios'
 import DeptTreeSelect from '@src/components/DeptTreeSelect'
 import urls from '@src/config'
@@ -67,20 +67,25 @@ class SwitchPage extends Component {
     return (
       <div className={styles.switch_page}>
         <Form.Item
-          label={<span>是否允许员工上传文章 <Popover
-            content={'若打开该功能，则员工可在小程序端使用文章获客助手功能，可帮助员工收集客户兴趣'}
-          >
-            <Icon type={'info-circle'} />
-          </Popover></span>}
-          labelCol={{ span: 3 }}
+          label={
+            <span>
+              是否允许员工上传文章
+            </span>}
+          labelCol={{ span: 4 }}
           wrapperCol={{ span: 20 }}
         >
-          <Switch checked={STAFF_UPLOAD_NEWS} onChange={this.onChangeUploadArticle} />
+          <span>
+            <Tooltip placement="top" title={'若打开该功能，则员工可在小程序端使用文章获客助手功能，可帮助员工收集客户兴趣'}>
+              <Icon type={'info-circle'} />
+            </Tooltip>
+            {'  '}
+            <Switch checked={STAFF_UPLOAD_NEWS} onChange={this.onChangeUploadArticle} />
+          </span>
         </Form.Item>
         {STAFF_UPLOAD_NEWS
           ? <Form.Item
             label={<span>选择可见部门<span style={{color: 'red'}}>*</span></span>}
-            labelCol={{ span: 3 }}
+            labelCol={{ span: 4 }}
             wrapperCol={{ span: 20 }}
           >
             <DeptTreeSelect
@@ -91,8 +96,10 @@ class SwitchPage extends Component {
               onChange={this.selectDept}/>
             <p>设置完成可见部门，此功能（小程序-文章获客助手）仅限可见部门员工使用</p>
           </Form.Item> : null }
-        {STAFF_UPLOAD_NEWS && <Button type={'primary'} style={{marginLeft: 204}} onClick={this.handleSave}>保存</Button>}
-
+        {STAFF_UPLOAD_NEWS &&
+        <Form.Item wrapperCol={{offset: 4}}>
+          <Button type={'primary'} onClick={this.handleSave}>保存</Button>
+        </Form.Item> }
       </div>
     )
   }

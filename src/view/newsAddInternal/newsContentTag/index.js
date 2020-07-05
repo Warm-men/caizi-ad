@@ -137,7 +137,7 @@ export default class newsContentTag extends Component {
       <div className="newsContentTag" >
         <ul className="newsContentTagUl">
           <li className="newsContentTagLi">
-            <span className={'label'}>方式：</span>
+            {/* <span className={'label'}>方式：</span> */}
             <span>
               <Radio.Group onChange={this.onChangeMode} value={mode}>
                 <Radio value={true}>自动</Radio>

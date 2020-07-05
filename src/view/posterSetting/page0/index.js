@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react'
-import { message, Button, Table, Popconfirm } from 'antd'
-import { Link, withRouter } from 'react-router-dom'
+import { message, Table, Popconfirm, Icon } from 'antd'
+import { withRouter } from 'react-router-dom'
+import RoleButton from '@src/components/roleButton'
 import axios from '@src/utils/axios'
 import urls from '@src/config'
-import utils from '@src/utils'
 import './index.less'
 @withRouter
 class PosterSetting extends Component {
@@ -44,12 +44,6 @@ class PosterSetting extends Component {
 
   // 删除
   hanldDelete = (data) => {
-    const isRight = utils.checkButtonRight(this.props.location.pathname, 'posterDelete')
-    if (!isRight) return
-    if (!data.owner) {
-      utils.openRightMessage()
-      return
-    }
     axios.get(urls.deletePoster + `?id=${data.id}`).then((res) => {
       if (res.ret === 0) {
         message.success('删除成功')
@@ -111,9 +105,26 @@ class PosterSetting extends Component {
       dataIndex: 'operate',
       render: (text, record) => (
         <Fragment>
-          <Button type="primary" onClick={() => { this.handleEdit(record) }}>编辑</Button>
+          <RoleButton
+            isButton={false}
+            pathname={this.props.location.pathname}
+            styles={{color: '#3078DB'}}
+            rolekey={'posterEdit'}
+            onClick={() => { this.handleEdit(record) }}
+            owner={record.owner}
+          >
+              编辑
+          </RoleButton>
           <Popconfirm title="确定删除此条数据吗?" onConfirm={() => this.hanldDelete(record)} okText="删除" cancelText="取消">
-            <Button type="danger">删除</Button>
+            <RoleButton
+              isButton={false}
+              pathname={this.props.location.pathname}
+              styles={{color: 'red', marginLeft: 10}}
+              rolekey={'posterDelete'}
+              owner={record.owner}
+            >
+              删除
+            </RoleButton>
           </Popconfirm>
         </Fragment>
       )
@@ -121,12 +132,6 @@ class PosterSetting extends Component {
   ]
 
   handleEdit = (record) => {
-    const isRight = utils.checkButtonRight(this.props.location.pathname, 'posterEdit')
-    if (!isRight) return
-    if (!record.owner) {
-      utils.openRightMessage()
-      return
-    }
     this.props.history.push({
       pathname: '/showPosterEdit',
       query: { data: record, type: 'edit' }
@@ -134,17 +139,24 @@ class PosterSetting extends Component {
   }
 
   handleAdd = () => {
-    const isRight = utils.checkButtonRight(this.props.location.pathname, 'posterAdd')
-    if (!isRight) return
     this.props.history.push({ pathname: '/showPosterEdit', query: { type: 'add' } })
   }
   render = () => {
     const { isLoading, dataSource } = this.state
+    const { pathname } = this.props.location
     return (
       <div className="showPosterContainer">
-        <div className="header">
+        <div className="view1Header">
+          <RoleButton
+            type="primary"
+            pathname={pathname}
+            className={'addPoster'}
+            rolekey={'posterAdd'}
+            onClick={this.handleAdd}
+          >
+            <Icon type="plus-square" /> 新增海报
+          </RoleButton>
           通过上传展业海报，客户经理可在企业微信分享客户或添加个人名片进行推广
-          <Button type="primary" onClick={this.handleAdd}>新增</Button>
         </div>
         <Table loading={isLoading} rowKey="id" dataSource={dataSource} columns={this.columns} pagination={this.pagination()} />
       </div>

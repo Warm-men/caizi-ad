@@ -2,28 +2,24 @@ import React, { Component } from 'react'
 import {
   Button,
   Form,
-  Input,
   Switch,
   Tooltip,
-  Radio,
-  Tag,
   message,
   Modal,
   Spin,
   Icon,
-  PageHeader
+  Tabs
 } from 'antd'
 import styles from './index.less'
 import axios from '@src/utils/axios'
 import urls from '@src/config'
 import '@src/style/weixin.css'
-import BraftEditor from '@src/components/braftEditor'
 import NewsContentTag from './newsContentTag'
 import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
-import UploadDragger from './uploadDragger'
-import UploadDragger2 from './uploadDragger2'
+import { withRouter } from 'react-router-dom'
+import { TabView1, TabView2, TabView3 } from '@src/components/tabView'
 import utils from '@src/utils'
+import RoleButton from '@src/components/roleButton'
 import PageHeaderHoc from '@src/components/PageHeaderHoc'
 @withRouter
 class NewsAddInternal extends Component {
@@ -32,6 +28,7 @@ class NewsAddInternal extends Component {
     this.newId = utils.getUrlQueryString(props.location.search, 'newId')
     this.state = {
       addType: 0,
+      defaultActiveKey: this.newId ? '2' : '0',
       // 填写要绑定的公众号 比如 '中国光大银行,光大银行信用卡,深圳生活'
       publicAddressNames: '',
       // 已绑定的公众号
@@ -76,7 +73,7 @@ class NewsAddInternal extends Component {
 
   getNewsDetail = () => {
     // 从编辑进入页面
-    this.setState({ addType: 2, mode: true, isEdit: true })
+    this.setState({ addType: 2, mode: true })
     axios.post(urls.newsDetail, { newsId: this.newId }).then(res => {
       const { title, content, crawl, txt, cover, mustSend, summary, originalCreator, defaultImg } = res.retdata
       this.setState({
@@ -105,8 +102,8 @@ class NewsAddInternal extends Component {
     })
   }
   // 改变添加方式
-  onChangeAddType = (ev) => {
-    this.setState({ addType: ev.target.value, mode: true })
+  onChangeAddType = (key) => {
+    this.setState({ addType: parseInt(key), mode: true })
   }
   // 改变文章来源
   onChangeArticleType = (ev) => {
@@ -171,11 +168,6 @@ class NewsAddInternal extends Component {
   submitAdd = () => {
     if (this.isLoadingSubmit) return
     this.isLoadingSubmit = true
-    const isRight = utils.checkButtonRight(this.props.location.pathname, 'aritcleAdd')
-    if (!isRight) {
-      this.isLoadingSubmit = false
-      return
-    }
     const { addType, articleType } = this.state
     if (addType === 0) {
       this.newsInformationCreate()
@@ -435,10 +427,6 @@ class NewsAddInternal extends Component {
     })
   }
 
-  goback = () => {
-    console.log('ssss')
-  }
-
   render () {
     const {
       addType,
@@ -449,7 +437,6 @@ class NewsAddInternal extends Component {
       publicAddressNames,
       inputTip,
       mode,
-      isEmptyEditor,
       isAdding,
       articleType,
       isEdit,
@@ -459,34 +446,147 @@ class NewsAddInternal extends Component {
       isFinishedUploadLocalArticle,
       previewImgFileList,
       summary,
-      originalCreator
+      originalCreator,
+      defaultActiveKey
     } = this.state
-    const t1 = <div>
+
+    const tipsView = <div>
       <p>1.自动：系统会根据文章中高频词出现频率自动打标；例如文章中高频出现“货基、定投、净值”词语，则文章会打上“基金”的标签。</p>
       <p>2.手动：系统会根据所选标签进行打标；若只选择类别，未选择标签，则文章不会被打标签。</p>
       <p>3.每篇文章最多可以打3个标签</p>
     </div>
+
     const shareImg = previewImgFileList.length
       ? previewImgFileList.join(',')
       : require('@src/assets/h5_share_default.png')
     const isNoWechat = addType === 1 && articleType === 1
     const isWechat = addType === 1 && articleType === 0
     const ownCreate = addType === 2
-    const bindAccount = addType === 0
-    const createByUrl = addType === 1
     const pageHeaderName = this.newId ? '编辑文章' : '新增文章'
+    const submitText = this.newId ? '保存' : '添加'
+    const { pathname } = this.props.location
     return (
       <Spin spinning={isLoading}>
         <div className="newsAddInternal">
-          {/* <div className={styles.title}>
-            新增我行发布
-          </div> */}
           <PageHeaderHoc
-            onBack={() => this.props.hisitory.goback()}
+            onBack={this.props.history.goBack}
             subTitle={pageHeaderName}
+            hasGoback={this.newId}
           />
           <div className={styles.content}>
-            <Form>
+
+            <Tabs defaultActiveKey={defaultActiveKey} onChange={this.onChangeAddType}>
+              <Tabs.TabPane tab="绑定行内公众号" key={'0'}>
+                <TabView1
+                  publicAddress={publicAddress}
+                  inputTip={inputTip}
+                  deletePublicAddress={this.deletePublicAddress}
+                  publicAddressNames={publicAddressNames}
+                >
+                  <Form.Item label={<span>内容标签 <Tooltip placement="top" title={tipsView}>
+                    <Icon type="info-circle" className={styles.toolTipsIcon} />
+                  </Tooltip></span>} labelCol={{span: 3}} wrapperCol={{span: 18}}>
+                    <NewsContentTag onChange={this.onChangeContentTags} mode={mode} history={this.props.history}/>
+                  </Form.Item>
+                  <Form.Item wrapperCol={{offset: 3}}>
+                    <RoleButton
+                      type="primary"
+                      pathname={pathname}
+                      rolekey={'aritcleAdd'}
+                      loading={isAdding}
+                      onClick={this.submitAdd}
+                    >
+                      {submitText}
+                    </RoleButton>
+                  </Form.Item>
+                </TabView1>
+              </Tabs.TabPane>
+
+              <Tabs.TabPane tab="添加第三方链接文章" key={'1'}>
+                <TabView2
+                  isNoWechat={isNoWechat}
+                  articleType={articleType}
+                  newsUrl={newsUrl}
+                  isWechat={isWechat}
+                  originalCreator={originalCreator}
+                  isFinishedUploadNoWXArticle={isFinishedUploadNoWXArticle}
+                  updateImgFileList={this.updateImgFileList}
+                  ownCreate={ownCreate}
+                  title={title}
+                  summary={summary}
+                  shareImg={shareImg}
+                  onChangeArticleType={this.onChangeArticleType}
+                  onChangeNewsUrl={this.onChangeNewsUrl}
+                  onChangeOriginalInfo={this.onChangeOriginalInfo}
+                  onChangeTitle={this.onChangeTitle}
+                  onChangeSummary={this.onChangeSummary}
+                >
+                  <Form.Item label={<span>是否必发 <Tooltip placement="top" title={'可以将一些主要的内容设为必发，让员工重点推荐给客户'}>
+                    <Icon type="info-circle" className={styles.toolTipsIcon} />
+                  </Tooltip></span>} labelCol={{span: 3}} wrapperCol={{span: 18}}>
+                    <Switch checked={mustSend} onChange={this.onChangeMustSend} />
+                  </Form.Item>
+                  <Form.Item label={<span>内容标签 <Tooltip placement="top" title={tipsView}>
+                    <Icon type="info-circle" className={styles.toolTipsIcon} />
+                  </Tooltip></span>} labelCol={{span: 3}} wrapperCol={{span: 18}}>
+                    <NewsContentTag onChange={this.onChangeContentTags} mode={mode} history={this.props.history}/>
+                  </Form.Item>
+                  <Form.Item wrapperCol={{offset: 3}}>
+                    <RoleButton
+                      type="primary"
+                      pathname={pathname}
+                      rolekey={'aritcleAdd'}
+                      loading={isAdding}
+                      onClick={this.submitAdd}
+                    >
+                      {submitText}
+                    </RoleButton>
+                  </Form.Item>
+                </TabView2>
+              </Tabs.TabPane>
+
+              <Tabs.TabPane tab="手动添加" key={'2'}>
+                <TabView3
+                  ownCreate={ownCreate}
+                  isEdit={isEdit}
+                  isFinishedUploadLocalArticle={isFinishedUploadLocalArticle}
+                  updateDocFileList={this.updateDocFileList}
+                  originalCreator={originalCreator}
+                  updateImgFileList={this.updateImgFileList}
+                  isFinishedUploadNoWXArticle={isFinishedUploadNoWXArticle}
+                  title={title}
+                  shareImg={shareImg}
+                  editorHtml={editorHtml}
+                  onChangeEditor={this.onChangeEditor}
+                  summary={summary}
+                >
+                  <Form.Item label={<span>是否必发 <Tooltip placement="top" title={'可以将一些主要的内容设为必发，让员工重点推荐给客户'}>
+                    <Icon type="info-circle" className={styles.toolTipsIcon} />
+                  </Tooltip></span>} labelCol={{span: 3}} wrapperCol={{span: 18}}>
+                    <Switch checked={mustSend} onChange={this.onChangeMustSend} />
+                  </Form.Item>
+                  <Form.Item label={<span>内容标签 <Tooltip placement="top" title={tipsView}>
+                    <Icon type="info-circle" className={styles.toolTipsIcon} />
+                  </Tooltip></span>} labelCol={{span: 3}} wrapperCol={{span: 18}}>
+                    <NewsContentTag onChange={this.onChangeContentTags} mode={mode} history={this.props.history}/>
+                  </Form.Item>
+                  <Form.Item wrapperCol={{offset: 3}}>
+                    <RoleButton
+                      type="primary"
+                      pathname={pathname}
+                      rolekey={'aritcleAdd'}
+                      loading={isAdding}
+                      onClick={this.submitAdd}
+                    >
+                      {submitText}
+                    </RoleButton>
+                  </Form.Item>
+                </TabView3>
+
+              </Tabs.TabPane>
+            </Tabs>
+
+            {/* <Form>
               <Form.Item label={<span>添加方式</span>} labelCol={{span: 3}} wrapperCol={{span: 18}}>
                 <Radio.Group onChange={this.onChangeAddType} value={addType}>
                   <Radio value={0}>绑定行内公众号</Radio>
@@ -637,7 +737,7 @@ class NewsAddInternal extends Component {
               <Form.Item wrapperCol={{offset: 3}}>
                 <Button type="primary" onClick={this.submitAdd} loading={isAdding} >添加</Button>
               </Form.Item>
-            </Form>
+            </Form> */}
           </div>
         </div>
       </Spin>
