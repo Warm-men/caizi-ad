@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react'
-import { Button, Table } from 'antd'
-import { Link, withRouter } from 'react-router-dom'
+import { Button, Table, Icon } from 'antd'
+import { withRouter } from 'react-router-dom'
 import axios from '@src/utils/axios'
 import urls from '@src/config'
 import utils from '@src/utils'
 import './index.less'
 import moment from 'moment'
+import RoleButton from '@src/components/roleButton'
 @withRouter
 export default class PosterSetting extends Component {
   constructor(props) {
@@ -138,34 +139,47 @@ export default class PosterSetting extends Component {
           <Button type="ghost" onClick={() => utils.downImg(record.qrCodeUrl, record.channelName)}>
             下载
           </Button>
-          <Button type="primary" onClick={() => this.handleEdit(record)}>编辑</Button>
+          <RoleButton
+            type="primary"
+            isButton={false}
+            pathname={this.props.location.pathname}
+            rolekey={'channelExpansionEdit'}
+            onClick={this.handleEdit}
+          >
+            编辑
+          </RoleButton>
+          {/* <Button type="primary" onClick={() => this.handleEdit(record)}>编辑</Button> */}
         </Fragment>
       )
     }
   ]
 
   handleEdit = (record) => {
-    const isRight = utils.checkButtonRight(this.props.location.pathname, 'channelExpansionEdit')
-    if (!isRight) return
     this.props.history.push({
       pathname: `/channelExpandEdit/${encodeURIComponent(utils.URImalformed(JSON.stringify(record)))}`
     })
   }
 
   handleAdd = () => {
-    const isRight = utils.checkButtonRight(this.props.location.pathname, 'channelExpansionAdd')
-    if (!isRight) return
     this.props.history.push({ pathname: '/channelExpandEdit/{}', query: { type: 'add' } })
   }
 
   render = () => {
     const { isLoading, dataSource } = this.state
-
+    const { pathname } = this.props.location
     return (
       <div className="showPosterContainer">
-        <div className="header">
+        <div className="view2Header">
+          <RoleButton
+            type="primary"
+            pathname={pathname}
+            className={'addPoster'}
+            rolekey={'channelExpansionAdd'}
+            onClick={this.handleAdd}
+          >
+            <Icon type="plus-square" /> 新增渠道
+          </RoleButton>
           客户通过扫描渠道二维码，添加客户经理好友，渠道标签将自动标注
-          <Button type="primary" onClick={this.handleAdd}>新增</Button>
         </div>
         <Table
           loading={isLoading}

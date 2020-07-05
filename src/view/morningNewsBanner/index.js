@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Table, message, Switch, Radio, Icon, Alert, Input, Modal, Avatar } from 'antd'
+import { Button, Table, message, Switch, Radio, Icon, Input, Tooltip, Modal, Avatar } from 'antd'
 import './index.less'
 import axios from '@src/utils/axios'
 import urls from '@src/config'
@@ -31,8 +31,6 @@ class MorningNews extends Component {
       isShowBanner: false,
       showComment: true,
       bannerPosition: 'top',
-      modalVisible: false,
-      contentAlertVisiable: false,
       isEditing: false,
       selectedRowKeys: [],
       titleValue: '',
@@ -120,26 +118,6 @@ class MorningNews extends Component {
     this.setState({bannerPosition: e.target.value}, this.saveEdit)
   }
 
-  readGuid = () => {
-    this.setState({ modalVisible: true })
-  }
-
-  readContentAlert = () => {
-    this.setState({ contentAlertVisiable: true })
-  }
-
-  handleClose = () => {
-    setTimeout(() => {
-      this.setState({ modalVisible: false })
-    }, 1000)
-  }
-
-  handleContenAlertClose = () => {
-    setTimeout(() => {
-      this.setState({ contentAlertVisiable: false })
-    }, 1000)
-  }
-
   preSave = () => {
     const { isShowBanner, bannerPosition, showComment, titleValue } = this.state
     const pramse = {
@@ -221,8 +199,6 @@ class MorningNews extends Component {
       isShowBanner,
       showComment,
       bannerPosition,
-      modalVisible,
-      contentAlertVisiable,
       isEditing,
       selectedRowKeys,
       titleValue,
@@ -270,28 +246,14 @@ class MorningNews extends Component {
             {isShowBanner ? ' 是' : ' 否'}
           </div>
           <div style={{marginBottom: 30, position: 'relative'}}>
-            <span>banner显示位置 <Icon type="info-circle" onClick={this.readGuid} /> ：</span>
+            <span>banner显示位置 <Tooltip placement="top" title={'顶部位置指在早报的所有文章内容之前；中部位置指在第一个文章内容模块之后的位置'}><Icon type="info-circle" /> </Tooltip> ：</span>
             <Radio.Group name="radiogroup" value={bannerPosition} onChange={this.radioOnChange} >
               <Radio value={'top'}>顶部位置</Radio>
               <Radio value={'mid'}>中部位置</Radio>
             </Radio.Group>
-            {modalVisible ? <Alert
-              message="顶部位置指在早报的所有文章内容之前；中部位置指在第一个文章内容模块之后的位置"
-              type="info"
-              closable
-              style={{position: 'absolute', width: 400, top: 30, zIndex: 100}}
-              onClose={this.handleClose}
-            /> : null }
           </div>
           <div style={{marginBottom: 50, position: 'relative'}}>
-            <span>banner展示内容设置 <Icon type="info-circle" onClick={this.readContentAlert} /> ：</span>
-            {contentAlertVisiable ? <Alert
-              message="早报banner内容的来源为banner配置中的内容，如需新增，请在对应菜单操作"
-              type="info"
-              closable
-              style={{position: 'absolute', width: 400, top: 30, zIndex: 100}}
-              onClose={this.handleContenAlertClose}
-            /> : null }
+            <span>banner展示内容设置 <Tooltip placement="top" title={'早报banner内容的来源为banner配置中的内容，如需新增，请在对应菜单操作'}><Icon type="info-circle" /></Tooltip> ：</span>
             {isShowBanner && !isEditing ? <Button
               style={{float: 'right', marginRight: 200, width: 100}}
               type="primary"

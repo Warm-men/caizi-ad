@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Button, Table, message, Modal } from 'antd'
+import { Button, Table, message, Modal, Icon } from 'antd'
 import './index.less'
 import axios from '@src/utils/axios'
 import urls from '@src/config'
-import Tools from '@src/utils'
+import RoleButton from '@src/components/roleButton'
 import DeptTreeSelect from '@src/components/DeptTreeSelect'
 
 export default class BannerList extends Component {
@@ -41,40 +41,27 @@ export default class BannerList extends Component {
 
   // 删除
   delete = (record) => {
-    const isRight = Tools.checkButtonRight(
-      this.props.location.pathname,
-      'bannerDel'
-    )
-    if (!isRight) return
-    if (!record.owner) {
-      Tools.openRightMessage()
-      return
-    }
     axios.post(urls.bannerDelete, { bannerId: record.bannerId }).then((res) => {
       message.success('删除成功')
       this.getBannerList()
     })
   }
 
+  beforeDel = (record) => {
+    Modal.confirm({
+      title: '确定删除？',
+      content: '',
+      onOk: () => {
+        this.delete(record)
+      }
+    })
+  }
+
   handleAdd = () => {
-    const isRight = Tools.checkButtonRight(
-      this.props.location.pathname,
-      'bannerAdd'
-    )
-    if (!isRight) return
     this.props.history.push('/bannerAdd')
   }
 
   handleEdit = (record) => {
-    const isRight = Tools.checkButtonRight(
-      this.props.location.pathname,
-      'bannerEdit'
-    )
-    if (!isRight) return
-    if (!record.owner) {
-      Tools.openRightMessage()
-      return
-    }
     this.props.history.push({
       pathname: '/bannerUpdate',
       search: `?id=${record.bannerId}`
@@ -110,11 +97,6 @@ export default class BannerList extends Component {
   }
 
   beforePush = (record) => {
-    const isRight = Tools.checkButtonRight(
-      this.props.location.pathname,
-      'bannerPush'
-    )
-    if (!isRight) return
     this.currentRecord = record
     this.pullBannerDetail(record)
     this.setState({ showPushModal: true, chargeDept: [] })
@@ -181,34 +163,56 @@ export default class BannerList extends Component {
         width: 350,
         render: (text, record, index) => (
           <span className={'actionArea'}>
-            <span
-              onClick={() => this.handleEdit(record)}
+            <RoleButton
+              isButton={false}
+              pathname={pathname}
               className={'spanButton'}
+              rolekey={'bannerEdit'}
+              owner={record.owner}
+              onClick={() => this.handleEdit(record)}
             >
               编辑
-            </span>
+            </RoleButton>
             {index === 0 ? null
-              : <span
+              : <RoleButton
+                isButton={false}
+                pathname={pathname}
                 className={'spanButton'}
-                onClick={() => this.updateSeq(0, record)}>上移</span>
+                rolekey={'bannerSort'}
+                onClick={() => this.updateSeq(0, record)}
+              >
+              上移
+              </RoleButton>
             }
             {index === (this.state.tableData.length - 1) ? null
-              : <span
+              : <RoleButton
+                isButton={false}
+                pathname={pathname}
                 className={'spanButton'}
-                onClick={() => this.updateSeq(1, record)}>下移</span>}
-
-            <span
-              onClick={() => this.beforePush(record)}
+                rolekey={'bannerSort'}
+                onClick={() => this.updateSeq(1, record)}
+              >
+              下移
+              </RoleButton>
+            }
+            <RoleButton
+              isButton={false}
+              pathname={pathname}
               className={'spanButton'}
+              rolekey={'bannerPush'}
+              onClick={() => this.beforePush(record)}
             >
               推送
-            </span>
-            <span
-              onClick={() => this.delete(record)}
+            </RoleButton>
+            <RoleButton
+              isButton={false}
+              pathname={pathname}
               className={'spanButtonDel'}
+              rolekey={'bannerDel'}
+              onClick={() => this.beforeDel(record)}
             >
               删除
-            </span>
+            </RoleButton>
           </span>
         )
       }
@@ -220,13 +224,22 @@ export default class BannerList extends Component {
       confirmLoading,
       chargeDept
     } = this.state
+    const { pathname } = this.props.location
     return (
       <div className={'bannerList'}>
         <div className={'title'}>小站banner配置</div>
         <div className={'content'}>
-          <Button type="primary" className={'addBtn'} onClick={this.handleAdd}>
-            新增
-          </Button>
+          <div className={'operationButtonView'}>
+            <RoleButton
+              type="primary"
+              pathname={pathname}
+              className={'addBtn'}
+              rolekey={'bannerAdd'}
+              onClick={this.handleAdd}
+            >
+              <Icon type="plus-square" /> 新增banner
+            </RoleButton>
+          </div>
           <Table
             loading={isLoading}
             className={'bannerTable'}

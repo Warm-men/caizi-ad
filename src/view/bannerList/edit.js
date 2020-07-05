@@ -9,6 +9,7 @@ import utils from '@src/utils'
 import DeptTreeSelect from '@src/components/DeptTreeSelect'
 import 'antd/dist/antd.css'
 import { connect } from 'react-redux'
+import PageHeaderHoc from '@src/components/PageHeaderHoc'
 
 const mapStateToProps = (state) => {
   return {
@@ -346,19 +347,15 @@ export default class BannerEdit extends Component {
       labelCol: {span: 3},
       wrapperCol: {span: 21}
     }
+    const pageHeaderName = isAdd ? '新增banner' : '修改banner'
     return (
       <div className={'bannerEdit'}>
-        <div className={'title'}>
-          <span onClick={() => this.props.history.goBack()} style={{cursor: 'pointer'}} >
-            <Icon type="left"/>
-            <span style={{marginLeft: '10px'}}>banner列表</span>
-          </span>
-        </div>
+        <PageHeaderHoc
+          onBack={this.props.history.goBack}
+          subTitle={pageHeaderName}
+        />
         <Spin spinning={isLoading}>
           <div className={'content'}>
-            <div className={'contentTitle'}>
-              {isAdd ? '新增banner' : '修改banner'}
-            </div>
             <div className={'formArea'}>
               <Form>
                 <Row>
@@ -525,8 +522,8 @@ export default class BannerEdit extends Component {
                 <Row>
                   <Col span={24}>
                     <Form.Item wrapperCol={{offset: 3, span: 9}}>
+                      <div style={{color: '#888', marginLeft: '15px'}}><span style={{color: 'red'}}>*</span> 星号内容都不为空时，才可提交</div>
                       <Button type="primary" disabled={!this.haveInputRequired()} onClick={this.submit}>提交</Button>
-                      <span style={{color: '#888', marginLeft: '15px'}}>*星号内容都不为空时，才可提交</span>
                     </Form.Item>
                   </Col>
                 </Row>
